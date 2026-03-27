@@ -1,4 +1,5 @@
-from database import create_table, insert_expense, fetch_expenses, delete_expense, update_expense, get_total_expense
+from database import create_table, insert_expense, fetch_expenses, delete_expense, update_expense, get_total_expense, get_category_expense
+import matplotlib.pyplot as plt
 
 def add_expense():
     try:
@@ -66,6 +67,25 @@ def check_budget():
     else:
         print("✅ You are within budget.")
 
+def show_category_analysis():
+    data = get_category_expense()
+
+    if not data:
+        print("No data available.")
+        return
+
+    categories = [row[0] for row in data]
+    amounts = [row[1] for row in data]
+
+    print("\n--- Category-wise Expenses ---")
+    for c, a in zip(categories, amounts):
+        print(f"{c}: {a}")
+
+    # Plot pie chart
+    plt.pie(amounts, labels=categories, autopct='%1.1f%%')
+    plt.title("Expense Distribution")
+    plt.show()
+
 def main():
     create_table()   # VERY IMPORTANT
 
@@ -74,8 +94,8 @@ def main():
         print("2. View Expenses")
         print("3. Delete Expense")
         print("4. Update Expense")
-        print("5. Check Budget")
-        print("6. Exit")
+        print("6. Category Analysis")
+        print("7. Exit")
 
         choice = input("Enter choice: ")
 
@@ -90,6 +110,8 @@ def main():
         elif choice == "5":
             check_budget()
         elif choice == "6":
+            show_category_analysis()
+        elif choice == "7":
             print("Exiting program...")
             break
 

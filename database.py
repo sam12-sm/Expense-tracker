@@ -74,3 +74,17 @@ def get_total_expense():
 
     return total if total else 0
 
+def get_category_expense():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT category, SUM(amount)
+    FROM expenses
+    GROUP BY category
+    """)
+
+    data = cursor.fetchall()
+
+    conn.close()
+    return data
