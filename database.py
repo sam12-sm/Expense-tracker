@@ -49,3 +49,16 @@ def delete_expense(expense_id):
 
     conn.commit()
     conn.close()
+
+def update_expense(expense_id, amount, category, description):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    UPDATE expenses
+    SET amount = ?, category = ?, description = ?
+    WHERE id = ?
+    """, (amount, category, description, expense_id))
+
+    conn.commit()
+    conn.close()

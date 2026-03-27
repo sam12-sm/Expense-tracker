@@ -1,4 +1,4 @@
-from database import create_table, insert_expense, fetch_expenses, delete_expense
+from database import create_table, insert_expense, fetch_expenses, delete_expense, update_expense
 
 def add_expense():
     try:
@@ -34,6 +34,20 @@ def delete_expense_ui():
     delete_expense(expense_id)
     print("Expense deleted successfully!")
 
+def update_expense_ui():
+    try:
+        expense_id = int(input("Enter expense ID to update: "))
+        amount = float(input("Enter new amount: "))
+    except ValueError:
+        print("Invalid input.")
+        return
+
+    category = input("Enter new category: ")
+    description = input("Enter new description: ")
+
+    update_expense(expense_id, amount, category, description)
+    print("Expense updated successfully!")
+
 def main():
     create_table()   # VERY IMPORTANT
 
@@ -41,7 +55,8 @@ def main():
         print("\n1. Add Expense")
         print("2. View Expenses")
         print("3. Delete Expense")
-        print("4. Exit")
+        print("4. Update Expense")
+        print("5. Exit")
 
         choice = input("Enter choice: ")
 
@@ -52,6 +67,8 @@ def main():
         elif choice == "3":
             delete_expense_ui()
         elif choice == "4":
+            update_expense_ui()
+        elif choice == "5":
             print("Exiting program...")
             break
 
