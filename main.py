@@ -1,6 +1,4 @@
-from database import create_table
-
-expenses = []
+from database import create_table, insert_expense, fetch_expenses
 
 def add_expense():
     try:
@@ -12,26 +10,22 @@ def add_expense():
     category = input("Enter category: ")
     description = input("Enter description: ")
 
-    expense = {
-        "amount": amount,
-        "category": category,
-        "description": description
-    }
-
-    expenses.append(expense)
+    insert_expense(amount, category, description)
     print("Expense added successfully!")
 
 def view_expenses():
+    expenses = fetch_expenses()
+
     if not expenses:
         print("No expenses found.")
         return
 
     print("\n--- Expenses ---")
     for exp in expenses:
-        print(f"{exp['amount']} | {exp['category']} | {exp['description']}")
+        print(f"{exp[0]} | {exp[1]} | {exp[2]} | {exp[3]}")
 
 def main():
-    create_table()   # database + table created here
+    create_table()   # VERY IMPORTANT
 
     while True:
         print("\n1. Add Expense")
