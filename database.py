@@ -62,3 +62,15 @@ def update_expense(expense_id, amount, category, description):
 
     conn.commit()
     conn.close()
+
+def get_total_expense():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT SUM(amount) FROM expenses")
+    total = cursor.fetchone()[0]
+
+    conn.close()
+
+    return total if total else 0
+

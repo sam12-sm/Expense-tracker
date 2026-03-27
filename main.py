@@ -1,4 +1,4 @@
-from database import create_table, insert_expense, fetch_expenses, delete_expense, update_expense
+from database import create_table, insert_expense, fetch_expenses, delete_expense, update_expense, get_total_expense
 
 def add_expense():
     try:
@@ -48,6 +48,24 @@ def update_expense_ui():
     update_expense(expense_id, amount, category, description)
     print("Expense updated successfully!")
 
+def check_budget():
+    try:
+        budget = float(input("Enter your monthly budget: "))
+    except ValueError:
+        print("Invalid budget.")
+        return
+
+    total = get_total_expense()
+
+    print(f"\nTotal Spending: {total}")
+
+    if total >= budget:
+        print("🚨 Budget exceeded!")
+    elif total >= 0.8 * budget:
+        print("⚠️ Warning: You have used 80% of your budget.")
+    else:
+        print("✅ You are within budget.")
+
 def main():
     create_table()   # VERY IMPORTANT
 
@@ -56,7 +74,8 @@ def main():
         print("2. View Expenses")
         print("3. Delete Expense")
         print("4. Update Expense")
-        print("5. Exit")
+        print("5. Check Budget")
+        print("6. Exit")
 
         choice = input("Enter choice: ")
 
@@ -69,6 +88,8 @@ def main():
         elif choice == "4":
             update_expense_ui()
         elif choice == "5":
+            check_budget()
+        elif choice == "6":
             print("Exiting program...")
             break
 
