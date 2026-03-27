@@ -40,3 +40,12 @@ def fetch_expenses():
 
     conn.close()
     return rows
+
+def delete_expense(expense_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM expenses WHERE id = ?", (expense_id,))
+
+    conn.commit()
+    conn.close()

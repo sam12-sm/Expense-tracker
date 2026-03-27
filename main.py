@@ -1,4 +1,4 @@
-from database import create_table, insert_expense, fetch_expenses
+from database import create_table, insert_expense, fetch_expenses, delete_expense
 
 def add_expense():
     try:
@@ -24,13 +24,24 @@ def view_expenses():
     for exp in expenses:
         print(f"{exp[0]} | {exp[1]} | {exp[2]} | {exp[3]}")
 
+def delete_expense_ui():
+    try:
+        expense_id = int(input("Enter expense ID to delete: "))
+    except ValueError:
+        print("Invalid ID.")
+        return
+
+    delete_expense(expense_id)
+    print("Expense deleted successfully!")
+
 def main():
     create_table()   # VERY IMPORTANT
 
     while True:
         print("\n1. Add Expense")
         print("2. View Expenses")
-        print("3. Exit")
+        print("3. Delete Expense")
+        print("4. Exit")
 
         choice = input("Enter choice: ")
 
@@ -39,10 +50,10 @@ def main():
         elif choice == "2":
             view_expenses()
         elif choice == "3":
+            delete_expense_ui()
+        elif choice == "4":
             print("Exiting program...")
             break
-        else:
-            print("Invalid choice")
 
 if __name__ == "__main__":
     main()
